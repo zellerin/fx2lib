@@ -1,16 +1,16 @@
-# Copyright (C) 2009 Ubixum, Inc. 
+# Copyright (C) 2009 Ubixum, Inc.
 #
 # This library is free software; you can redistribute it and/or
 #
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
-# 
+#
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -26,9 +26,9 @@ def openfx2(vid=0x04b4,pid=0x0082,idx=0):
     f.open(vid,pid,idx)
 
 def reset_device(reset):
- print reset and "Put device in reset" or "Set device to run"
+ print(reset and "Put device in reset" or "Set device to run")
  write_ram (0xe600,reset and '\x01' or '\x00', 1)
- 
+
 def write_ram(addr,data,length):
  transferred=0
  while(transferred<length):
@@ -40,10 +40,10 @@ def write_ram(addr,data,length):
     addr+transferred, 0,
     this_transfer_size )
   if (ret>0):
-   print "wrote %d bytes" % ret
+   print ("wrote %d bytes" % ret)
    transferred+=ret
   else:
-   print "Error: %d" % ret
+   print ("Error: %d" % ret)
    return
 
 def reset_bix(filename):
@@ -52,8 +52,7 @@ def reset_bix(filename):
  """
  reset_device(True)
  bix=open(filename).read()
- print "loading bix file of length: %d" % len(bix) 
+ print ("loading bix file of length: %d" % len(bix))
  write_ram( 0, bix,len(bix) );
  reset_device(False)
  f.close()
-
