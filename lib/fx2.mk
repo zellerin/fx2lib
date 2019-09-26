@@ -35,7 +35,8 @@
 #
 #
 
-AS8051?=sdas8051
+SDCC_PREFIX?=
+AS8051?=$(SDCC_PREFIX)sdas8051
 
 VID?=0x04b4
 PID?=0x8613
@@ -43,7 +44,7 @@ PID?=0x8613
 INCLUDES?=""
 DSCR_AREA?=-Wl"-b DSCR_AREA=0x3e00"
 INT2JT?=-Wl"-b INT2JT=0x3f00"
-CC=sdcc
+CC=$(SDCC_PREFIX)sdcc
 CODE_SIZE?=--code-size 0x3c00
 XRAM_SIZE?=--xram-size 0x0200
 XRAM_LOC?=--xram-loc 0x3c00
@@ -52,8 +53,8 @@ BUILDDIR?=build
 FX2LIBDIR?=$(dir $(lastword $(MAKEFILE_LIST)))../
 
 RELS=$(addprefix $(BUILDDIR)/, $(addsuffix .rel, $(notdir $(basename $(SOURCES) $(A51_SOURCES)))))
-# these are pretty good settings for most firmwares.  
-# Have to be careful with memory locations for 
+# these are pretty good settings for most firmwares.
+# Have to be careful with memory locations for
 # firmwares that require more xram etc.
 SDCC = $(CC) -mmcs51 \
 	$(SDCCFLAGS) \
@@ -77,7 +78,7 @@ $(FX2LIBDIR)/lib/fx2.lib: $(FX2LIBDIR)/lib/*.c $(FX2LIBDIR)/lib/*.a51
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
 
-$(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib $(DEPS) 
+$(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/lib/fx2.lib $(DEPS)
 # can't use default target %.rel because there is no way
 # to differentiate the dependency.  (Is it %.rel: %.c or %.a51)
 	for a in $(A51_SOURCES); do \
@@ -102,4 +103,3 @@ clean:
 
 clean-all: clean
 	$(MAKE) -C $(FX2LIBDIR)/lib clean
-
