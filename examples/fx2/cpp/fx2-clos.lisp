@@ -1,6 +1,5 @@
 (defpackage fx2
-  (:use #:cl)
-  (:shadow cl:open cl:close))
+  (:use #:cl))
 
 (load "fx2.lisp")
 
@@ -9,56 +8,36 @@
 (defvar *vid* #x04b4)
 (defvar *pid* #x8613)
 
-(defclass fx2()
-  ((ff-pointer :reader ff-pointer)))
+(defun fx2_open (self &key (vid *vid*) (pid *pid*) (idx 0))
+  (_fx2_open self vid pid idx))
 
-(defmethod initialize-instance :after ((obj fx2) &key)
-  (setf (slot-value obj 'ff-pointer) (new_fx2)))
-
-(defun open (self &key (vid) (pid) (idx))
-  (cond ((and pid idx vid)
-	 (fx2_open_0 (ff-pointer self) vid pid idx))
-	((and pid vid)
-	 (fx2_open_1 (ff-pointer self) vid pid))
-	(vid
-	 (fx2_open_2 (ff-pointer self) vid))
-	(t
-	 (fx2_open_3 (ff-pointer self)))))
-
-(defmethod set-interface ((self fx2) (interface cl:integer) (alt_setting cl:integer))
+#+nil (defmethod set-interface ((self fx2) (interface cl:integer) (alt_setting cl:integer))
   (fx2_set_interface (ff-pointer self) interface alt_setting))
 
-(defmethod isopen ((self fx2))
+#+nil (defmethod isopen ((self fx2))
   (fx2_isopen (ff-pointer self)))
 
-(defmethod close ((self fx2))
-  (fx2_close (ff-pointer self)))
-
-(defmethod set-debug-level ((self fx2) (n cl:integer))
+#+nil (defmethod set-debug-level ((self fx2) (n cl:integer))
   (fx2_set_debug_level (ff-pointer self) n))
 
 (defun do-usb-command (self buf size type request
 			  value
 			  index length
 		       &key (timeout 1000))
-  (if timeout
-    (fx2_do_usb_command_0 (ff-pointer self) buf size type request value index length timeout)))
+  "This wrapper provides timeout default"
+  (fx2_do_usb_command_0 self buf size type request value index length timeout))
 
-(defmethod clear-halt ((self fx2) (ep cl:character))
-  (fx2_clear_halt (ff-pointer self) ep))
-
-(defmethod reset ((self fx2))
+#+nil (defmethod reset ((self fx2))
   (fx2_reset (ff-pointer self)))
 
-(defmethod set-configuration ((self fx2) (config cl:integer))
+#+nil (defmethod set-configuration ((self fx2) (config cl:integer))
   (fx2_set_configuration (ff-pointer self) config))
 
 (defun ep-bulk (self buf size
 		ep
 		timeout)
   (let ((foreign (cffi:foreign-alloc :unsigned-char :initial-contents buf)))
-    (fx2_ep_bulk (ff-pointer self)
-		 foreign size ep timeout)
+    (fx2_ep_bulk self foreign size ep timeout)
     (prog1 (loop for i from 0 below size
 		 collect (cffi:mem-ref foreign :char i))
       (cffi:foreign-free foreign))))
@@ -90,22 +69,23 @@
 
 (defun reset-bix (path)
   "Use this function to reset your firmware.  You'll need to reopen the device afterward."
-  (reset-device t)
-  (with-open-file (f path :element-type '(unsigned-byte 8))
-    (let* ((l (file-length f))
-	   (data (make-array l :element-type '(unsigned-byte 8))))
-      (assert (= l (read-sequence data f)))
-      (signal "Loading bix files, size ~d" l)
-      (write-ram 0 data)
-      (reset-device nil))))
+  (with-open-fx ()
+    (reset-device t)
+    (with-open-file (f path :element-type '(unsigned-byte 8))
+      (let* ((l (file-length f))
+	     (data (make-array l :element-type '(unsigned-byte 8))))
+	(assert (= l (read-sequence data f)))
+	(signal "Fail to load bix file ~s properly" path l)
+	(write-ram 0 data)
+	(reset-device nil)))))
 
 (defmacro with-open-fx (pars &body body)
-  `(let* ((*default-fx2* (make-instance 'fx2::fx2)))
-     (fx2::open *default-fx2* ,@pars)
+  `(let* ((*default-fx2* (print (new_fx2))))
+     (fx2_open *default-fx2* ,@pars)
      (unwind-protect
 	  (progn
 	    ,@body)
-       (fx2::close *default-fx2*))))
+       (fx2_close *default-fx2*))))
 
 (defun do-bulk ()
   "Test bulk transfer example."
@@ -116,4 +96,4 @@
       (print (ep-bulk *default-fx2* ret (length ret) #x86 1000))
       ret)))
 
-#+example (fx2::with-open-fx (:pid  #x8613 :vid #x4b4) (fx2::reset-bix "/opt/compressed/git/fx2lib/examples/bulkloop/build/bulkloop.bix"))
+#+example (fx2::with-open-fx (:pid  #x8613 :vid #x4b4) (fx2::reset-bix "~/src/fx2lib-clean/examples/bulkloop/build/bulkloop.bix"))
