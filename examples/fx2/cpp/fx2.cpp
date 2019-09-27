@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 Ubixum, Inc. 
+ * Copyright (C) 2009 Ubixum, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -36,7 +36,7 @@ void fx2::set_debug_level(int n) {
 fx2::~fx2() {
 
  if (isopen()) close();
- 
+
  libusb_exit(libusb_ctx);
 }
 
@@ -47,7 +47,6 @@ fx2::~fx2() {
 
 
 void fx2::open(int vid,int pid,int idx) {
-
     libusb_device **list;
     int devices = libusb_get_device_list( libusb_ctx, &list );
     int cur_idx=0;
@@ -77,7 +76,7 @@ void fx2::open(int vid,int pid,int idx) {
           }
        }
     }
-    
+
     if (!dev_handle) {
         printf ( "Device not opened.\n" );
     }
@@ -148,7 +147,7 @@ bool fx2::ep_bulk(char* buf, int size, unsigned char ep, int timeout) {
  int transferred;
  int rv=libusb_bulk_transfer ( dev_handle, ep, (unsigned char*)buf, size, &transferred, timeout );
 
- if (!rv) return true; 
+ if (!rv) return true;
 
  if (rv==LIBUSB_ERROR_TIMEOUT) {
     printf ( "Transfer Timeout.  %d bytes transferred.\n", transferred );

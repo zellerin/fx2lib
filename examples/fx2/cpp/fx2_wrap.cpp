@@ -213,7 +213,7 @@ EXPORT SWIGCDATA *_wrap_cdata (void *larg1, int larg2) {
   void *arg1 = (void *) 0 ;
   int arg2 ;
   SWIGCDATA result;
-  
+
   arg2 = 1;
   arg1 = larg1;
   arg2 = larg2;
@@ -231,15 +231,15 @@ EXPORT void _wrap_memmove (void *larg1, void *larg2, int larg3) {
   void *arg1 = (void *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   arg3 = larg3;
   try {
     memmove(arg1,(void const *)arg2,arg3);
-    
+
   } catch (...) {
-    
+
   }
 }
 
@@ -250,7 +250,7 @@ EXPORT void _wrap_memmove (void *larg1, void *larg2, int larg3) {
 EXPORT fx2 *_wrap_new_fx2 () {
   fx2 * lresult = (fx2 *)0 ;
   fx2 *result = 0 ;
-  
+
   try {
     result = (fx2 *)new fx2();
     lresult = result;
@@ -263,13 +263,13 @@ EXPORT fx2 *_wrap_new_fx2 () {
 
 EXPORT void _wrap_delete_fx2 (fx2 *larg1) {
   fx2 *arg1 = (fx2 *) 0 ;
-  
+
   arg1 = larg1;
   try {
     delete arg1;
-    
+
   } catch (...) {
-    
+
   }
 }
 
@@ -279,16 +279,16 @@ EXPORT void _wrap_fx2_open (fx2 *larg1, int larg2, int larg3, int larg4) {
   int arg2 ;
   int arg3 ;
   int arg4 ;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   arg3 = larg3;
   arg4 = larg4;
   try {
     (arg1)->open(arg2,arg3,arg4);
-    
+
   } catch (...) {
-    
+
   }
 }
 
@@ -297,15 +297,15 @@ EXPORT void _wrap_fx2_set_interface (fx2 *larg1, int larg2, int larg3) {
   fx2 *arg1 = (fx2 *) 0 ;
   int arg2 ;
   int arg3 ;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   arg3 = larg3;
   try {
     (arg1)->set_interface(arg2,arg3);
-    
+
   } catch (...) {
-    
+
   }
 }
 
@@ -314,7 +314,7 @@ EXPORT int _wrap_fx2_isopen (fx2 *larg1) {
   int lresult = (int)0 ;
   fx2 *arg1 = (fx2 *) 0 ;
   bool result;
-  
+
   arg1 = larg1;
   try {
     result = (bool)(arg1)->isopen();
@@ -328,13 +328,13 @@ EXPORT int _wrap_fx2_isopen (fx2 *larg1) {
 
 EXPORT void _wrap_fx2_close (fx2 *larg1) {
   fx2 *arg1 = (fx2 *) 0 ;
-  
+
   arg1 = larg1;
   try {
     (arg1)->close();
-    
+
   } catch (...) {
-    
+
   }
 }
 
@@ -342,19 +342,19 @@ EXPORT void _wrap_fx2_close (fx2 *larg1) {
 EXPORT void _wrap_fx2_set_debug_level (fx2 *larg1, int larg2) {
   fx2 *arg1 = (fx2 *) 0 ;
   int arg2 ;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   try {
     (arg1)->set_debug_level(arg2);
-    
+
   } catch (...) {
-    
+
   }
 }
 
 
-EXPORT int _wrap_fx2_do_usb_command__SWIG_0 (fx2 *larg1, char *larg2, int larg3, unsigned char larg4, unsigned char larg5, unsigned short larg6, unsigned short larg7, unsigned short larg8, int larg9) {
+EXPORT int _wrap_fx2_do_usb_command (fx2 *larg1, char *larg2, int larg3, unsigned char larg4, unsigned char larg5, unsigned short larg6, unsigned short larg7, unsigned short larg8, int larg9) {
   int lresult = (int)0 ;
   fx2 *arg1 = (fx2 *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -366,7 +366,7 @@ EXPORT int _wrap_fx2_do_usb_command__SWIG_0 (fx2 *larg1, char *larg2, int larg3,
   unsigned short arg8 ;
   int arg9 ;
   int result;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   arg3 = larg3;
@@ -385,43 +385,12 @@ EXPORT int _wrap_fx2_do_usb_command__SWIG_0 (fx2 *larg1, char *larg2, int larg3,
   }
 }
 
-
-EXPORT int _wrap_fx2_do_usb_command__SWIG_1 (fx2 *larg1, char *larg2, int larg3, unsigned char larg4, unsigned char larg5, unsigned short larg6, unsigned short larg7, unsigned short larg8) {
-  int lresult = (int)0 ;
-  fx2 *arg1 = (fx2 *) 0 ;
-  char *arg2 = (char *) 0 ;
-  int arg3 ;
-  unsigned char arg4 ;
-  unsigned char arg5 ;
-  unsigned short arg6 ;
-  unsigned short arg7 ;
-  unsigned short arg8 ;
-  int result;
-  
-  arg1 = larg1;
-  arg2 = larg2;
-  arg3 = larg3;
-  arg4 = larg4;
-  arg5 = larg5;
-  arg6 = larg6;
-  arg7 = larg7;
-  arg8 = larg8;
-  try {
-    result = (int)(arg1)->do_usb_command(arg2,arg3,arg4,arg5,arg6,arg7,arg8);
-    lresult = result;
-    return lresult;
-  } catch (...) {
-    return (int)0;
-  }
-}
-
-
 EXPORT int _wrap_fx2_clear_halt (fx2 *larg1, char larg2) {
   int lresult = (int)0 ;
   fx2 *arg1 = (fx2 *) 0 ;
   char arg2 ;
   int result;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   try {
@@ -438,7 +407,7 @@ EXPORT int _wrap_fx2_reset (fx2 *larg1) {
   int lresult = (int)0 ;
   fx2 *arg1 = (fx2 *) 0 ;
   int result;
-  
+
   arg1 = larg1;
   try {
     result = (int)(arg1)->reset();
@@ -455,7 +424,7 @@ EXPORT int _wrap_fx2_set_configuration (fx2 *larg1, int larg2) {
   fx2 *arg1 = (fx2 *) 0 ;
   int arg2 ;
   int result;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   try {
@@ -476,7 +445,7 @@ EXPORT int _wrap_fx2_ep_bulk (fx2 *larg1, char *larg2, int larg3, unsigned char 
   unsigned char arg4 ;
   int arg5 ;
   bool result;
-  
+
   arg1 = larg1;
   arg2 = larg2;
   arg3 = larg3;
@@ -490,5 +459,3 @@ EXPORT int _wrap_fx2_ep_bulk (fx2 *larg1, char *larg2, int larg3, unsigned char 
     return (int)0;
   }
 }
-
-

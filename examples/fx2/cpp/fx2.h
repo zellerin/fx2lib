@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 Ubixum, Inc. 
+ * Copyright (C) 2009 Ubixum, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,12 +25,12 @@ const int VID=0x04b4;
 const int PID=0x0082;
 
 class fx2 {
-    
+
     private:
         libusb_context* libusb_ctx;
         libusb_device_handle* dev_handle;
         int interface,alt_setting;
-        
+
     public:
         fx2();
         ~fx2();
@@ -42,7 +42,7 @@ class fx2 {
          *
          * Opens device with vid,pid and claims alt 0 of interface 0
          **/
-        void open(int vid=VID,int pid=PID, int idx=0);
+        void open(int vid,int pid, int idx);
         void set_interface(int interface, int alt_setting);
         bool isopen() { return dev_handle != NULL; }
         void close();

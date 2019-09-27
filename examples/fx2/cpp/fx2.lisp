@@ -39,7 +39,7 @@
   (self :pointer)
   (n :int))
 
-(cffi:defcfun ("_wrap_fx2_do_usb_command__SWIG_0" fx2_do_usb_command_0) :int
+(cffi:defcfun ("_wrap_fx2_do_usb_command" fx2_do_usb_command) :int
   (self :pointer)
   (buf :string)
   (size :int)
@@ -49,16 +49,6 @@
   (index :unsigned-short)
   (length :unsigned-short)
   (timeout :int))
-
-(cffi:defcfun ("_wrap_fx2_do_usb_command__SWIG_1" fx2_do_usb_command_1) :int
-  (self :pointer)
-  (buf :string)
-  (size :int)
-  (type :unsigned-char)
-  (request :unsigned-char)
-  (value :unsigned-short)
-  (index :unsigned-short)
-  (length :unsigned-short))
 
 (cffi:defcfun ("_wrap_fx2_clear_halt" fx2_clear_halt) :int
   (self :pointer)
