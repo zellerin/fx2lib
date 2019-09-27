@@ -51,8 +51,8 @@ def reset_bix(filename):
   Use this function to reset your firmware.  You'll need to reopen the device afterward.
  """
  reset_device(True)
- bix=open(filename).read()
+ bix=open(filename, 'rb').read()
  print ("loading bix file of length: %d" % len(bix))
- write_ram( 0, bix,len(bix) );
+ write_ram(0, BYTEARRAY(bix),len(bix) );
  reset_device(False)
  f.close()
