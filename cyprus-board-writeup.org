@@ -1,0 +1,29 @@
+#+TITLE: Cyprus board and fx2lib
+* Overview
+- Goal :: put useful code to the board and let it run on a 2019 machine. The host machine is an Fedora FC30 with python3 only (and I did not make this to work).
+- Status :: Still works with Python2 with some rough edges during build patched in the local repository. Fails to work in Python3 and fix is not trivial for me. Made them work with Common Lisp CFFI that is more natural for me than Python anyway.
+
+* Details
+- Prerequisites :: fx2lib from github
+- Toolchain from dnf ::
+  + to compile 8051 :: sdcc
+  + to compile Python module ::  gcc-c++ swig python3-devel libusb-devel redhat-rpm-config
+- Build library :: =make SDCC_PREFIX=sdcc-=
+- fx2load :: cd examples/fx2; python3 setup.py install --user
+- bix files :: need to be created for fxload using make ... bix
+- bulkloop example :: seems to work with python2:
+  + after loading, system changes product ID
+  + The test example works
+* Issues
+- python3 fails to work with bix files :: I give up and move to Lisp FFI wrapper.
+* Common Lisp CFFI wrapper
+Version 1: direct translation from existing Python one including C++ layer.
+
+Good points:
+- Works, actually (at least the bulkloop example does)
+
+Bad points:
+- Repetitive layering
+- Needs libstdc++ as depenedency
+- No real value in C++ wrapper apparently in CL.
+- Not really good passing of the return data (problem of my CFFI knowledge probably)
